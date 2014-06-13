@@ -1,0 +1,8 @@
+gfortran -ffixed-line-length-100 -c MINUIT.f
+gfortran -c os_pc_990211.f
+
+try:
+gfortran -O3 -ffixed-line-length-80 -fdefault-integer-8 -o ttanal ttana_37.f ttgeneric13.f MINUIT.o os_pc_990211.o
+
+or:
+gfortran -O3 -ffixed-line-length-80 -o ttanal ttana_37.f ttgeneric13.f MINUIT.o os_pc_990211.o

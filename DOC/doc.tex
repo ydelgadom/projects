@@ -1,0 +1,489 @@
+\documentclass[a4paper,10pt]{report}
+
+\usepackage{epsfig,dsfont}
+\usepackage{enumitem}
+
+\begin{document}
+
+\begin{center}
+{\bf \Large Documentation} 
+\end{center}
+\vspace*{10mm}
+
+\subsection*{Archives and Files}
+
+The parent directory {\it projects/} contains the following archives:
+
+\begin{itemize}[leftmargin=*]
+ \item {\it autocorrelation$\_$analysis/}
+ \\Programs from Hans-Gerd Evertz to analyze autocorrelation time and binning series.  
+ His lecture notes on computer simulations are also here.
+ 
+ \item {\it spin$\_$Z3/}
+ \\$\mathds{Z}_3$ spin model programs and papers.
+ \begin{itemize}[leftmargin=*]
+  \item {\it papers/}
+  \\All published papers.
+  \item {\it metropolis$\_$conventional$\_$rep/}
+  \\Fortran programs to simulate the conventional
+  representation of the model (by Christof).
+  \item {\it small$\_$lattice$\_$exact/}
+  \\Fortran programs to compute the exact value of the observables in the conventional
+  representation, valid only for very small lattices, $< 4^4$ (by Christof).
+  \item {\it worm$\_$z3/}
+  \\C/C++ programs to simulate the dual representation of the model using
+  the worm algorithm.
+ \end{itemize}
+  
+ \item {\it spin$\_$SU3/}
+ \\$SU(3)$ spin model programs and papers.
+ \begin{itemize}[leftmargin=*]
+  \item {\it papers/}
+  \\All published papers.
+  \item {\it conventional$\_$rep/}
+  \\C/C++ programs to simulate the conventional
+  representation of the model.
+  \item {\it dual$\_$rep/}
+  \\C/C++ programs to simulate the dual
+  representation of the model using local updates.  
+  The worm algorithm did not work for this model. There are
+  two different ways of writing the dual variables (see papers):
+  \begin{itemize}[leftmargin=*]
+   \item {\it metropolis$\_$original$\_$var/}
+   \\Original variables, with 2 constrained link variables 
+   and 2 constrained monomers.
+   \item {\it metropolis$\_$rotated$\_$var/}
+   \\Rotated variables. The update with the new dimers and monomers has a
+   better performance.
+  \end{itemize}
+  \end{itemize}
+
+ \item {\it gauge$\_$Higgs$\_$model/}
+ \\All gauge Higgs models programs and papers.
+ \begin{itemize}[leftmargin=*]
+  \item {\it papers/}
+  \\All published papers.
+  \item {\it Z3$\_$model/}
+  \\C/C++ programs to simulate the dual representation of the 
+  $\mathds{Z}_3$ gauge Higgs model using the surface worm algorithm.
+  \item {\it U1$\_$model/}
+  \\C/C++ programs to simulate the dual representation of the 
+  $U(1)$ gauge Higgs model (with only one flavor) using the surface worm algorithm.
+  \item {\it U1$\_$model$\_$2flavors/}
+  \\C/C++ programs to simulate the dual representation of the 
+  $U(1)$ gauge Higgs model (two scalar fields) using the surface worm algorithm.
+ \end{itemize}
+
+\end{itemize}
+
+
+\subsection*{File names}
+\begin{itemize}[leftmargin=*]
+ \item Main programs:
+ \begin{itemize}[leftmargin=*]
+  \item {\it gen.cpp}
+  \\Main program to generate the configurations.  The output file is in binary format.
+  \vspace*{2mm}
+  \\{\bf Warning!!} By configurations we mean the total number of occupation numbers needed to compute 
+  the observables, i.e. we do not store the whole lattice.
+  
+  \item {\it analysis.cpp}
+  \\Main analysis program to compute the mean value and error bars of the observables.
+  It reads the configuration files created by {\it gen.cpp} and creates a file with the suffix {\it obs}, where
+  all observables are printed in text format.
+ \end{itemize}
+ 
+ \item Description of the include files:
+ \begin{itemize}[leftmargin=*]
+  \item {\it gen.h}: Libraries and global variables.
+  \item {\it lattice.h}: Global lattice variables and initialization routine of the neighbors array.
+  \item {\it init.h}: Initialization routines
+  \item {\it weights.h}: Functions to precompute the weights used in the accept/reject step.
+  \item {\it worm.h}: Worm algorithm.
+  \item {\it sweeps.h}: Sweeps with local updates.
+  \item {\it multigrid.h}: Multigrid equilibration subroutine.
+  \item {\it ranlxd.*}: L\"uscher's random number generator in double precision.
+ \end{itemize}
+
+\item {\it makefile}
+\\To compile the programs for different parameters and lattice sizes.
+\end{itemize}
+
+
+\subsection*{Simulation of the $\mathds{Z}_3$ spin model}
+\begin{itemize}[leftmargin=*]
+ \item To compile the configuration files:
+ \vspace*{2mm}
+ \texttt{
+ \\cd worm$\_$z3/
+ \\make ran   
+ \\make SIZE=4 PAR=TAU gen
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt SIZE} is equal to the lattice size.
+  \item The variable {\tt PAR} can be equal to {\tt TAU, KAPPA} or {\tt MU}.
+  The configurations are generated as a function of the variable {\tt PAR}.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To generate the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd worm$\_$z3/bin
+ \\./gen$\$$(SIZE)$\_\$$(PAR).x   
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameters are located in {\it bin/worm$\_$par.start}, where par is mu, tau or kappa.
+  \item The executable {\tt gen$\$$(SIZE)$\_\$$(PAR).x} reads the file with the input parameters and creates
+  a binary file with the configurations.
+ \end{itemize}
+ 
+ 
+ 
+ \item To compile the analysis program:
+ \vspace*{2mm}
+ \texttt{
+ \\cd worm$\_$z3/   
+ \\make PAR=TAU anal
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt PAR} can be equal to {\tt TAU, KAPPA} or {\tt MU}.
+  The observables are function of the variable {\tt PAR}.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To analyze the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd worm$\_$z3/bin
+ \\./anal$\_\$$(PAR).x -f CONFIGURATION$\_$FILE
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameter is the name of the file where the configurations are stored (same
+  name from {\it bin/worm$\_$par.start}).
+  \item The executable {\tt anal$\_\$$(PAR).x} reads the {\tt CONFIGURATION$\_$FILE} file 
+  and creates a text file {\tt CONFIGURATION$\_$FILEobs} with the observables and error bars.
+ \end{itemize}
+
+\end{itemize}
+
+
+
+\subsection*{Simulation of the SU(3) spin model}
+The compilation and execution of programs is exactly the same for both rotated and original variables.
+Here I will use the original variables to show the steps.
+\begin{itemize}[leftmargin=*]
+ \item To compile the configuration files:
+ \vspace*{2mm}
+ \texttt{
+ \\cd dual$\_$rep/metropolis$\_$original$\_$var/
+ \\make ran   
+ \\make SIZE=4 PAR=TAU gen
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt SIZE} is equal to the lattice size.
+  \item The variable {\tt PAR} can be equal to {\tt TAU, KAPPA0} or {\tt MU}.
+  \item For {\tt TAU} and {\tt MU}, the configurations are generated as a function of the variable {\tt PAR}.
+  \item {\tt KAPPA0} generates configurations as a function of $\beta$ for $\kappa = 0$.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To generate the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd dual$\_$rep/metropolis$\_$original$\_$var/bin
+ \\./gen$\$$(SIZE)$\_\$$(PAR).x   
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameters are located in {\it bin/metro$\_$su3$\_$par.start}, where par is tau or mu.
+  \item The executable {\tt gen$\$$(SIZE)$\_\$$(PAR).x} reads the file with the input parameters and creates
+  a binary file with the configurations.
+ \end{itemize}
+ 
+ 
+ 
+ \item To compile the analysis program:
+ \vspace*{2mm}
+ \texttt{
+ \\cd dual$\_$rep/metropolis$\_$original$\_$var/   
+ \\make PAR=TAU anal
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt PAR} can be equal to {\tt TAU} or {\tt MU}.
+  The observables are function of the variable {\tt PAR}.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To analyze the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd dual$\_$rep/metropolis$\_$original$\_$var/bin
+ \\./anal$\_\$$(PAR).x -f CONFIGURATION$\_$FILE
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameter is the name of the file where the configurations are stored (same
+  name from {\it bin/metro$\_$su3$\_$par.start}).
+  \item The executable {\tt anal$\_\$$(PAR).x} reads the {\tt CONFIGURATION$\_$FILE} file 
+  and creates a text file {\tt CONFIGURATION$\_$FILEobs} with the observables and error bars.
+ \end{itemize}
+
+\end{itemize}
+
+
+\subsection*{Simulation of the $\mathds{Z}_3$ gauge-Higgs model}
+\begin{itemize}[leftmargin=*]
+ \item To compile the configuration files:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/Z3$\_$model/
+ \\make ran   
+ \\make NS=4 NT=4 PAR=BETA gen
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt NS} is the length of the spatial direction of the lattice.
+  \item The variable {\tt NT} is the length of the temporal direction of the lattice.
+  \item The variable {\tt PAR} can be equal to {\tt BETA} or {\tt MU}.
+  The configurations are generated as a function of the variable {\tt PAR}.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To generate the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/Z3$\_$model/bin
+ \\./gen$\$$(NS)x$\$$(NT)$\_\$$(PAR).x   
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameters are located in {\it bin/worm$\_$par.start}, where par is beta or mu.
+  \item The executable {\tt gen$\$$(NS)x$\$$(NT)$\_\$$(PAR).x} reads the file with the input parameters and creates
+  a binary file with the configurations.
+ \end{itemize}
+ 
+ 
+ 
+ \item To compile the analysis program:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/Z3$\_$model/
+ \\make PAR=BETA anal
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt PAR} can be equal to {\tt BETA} or {\tt MU}.
+  The observables are function of the variable {\tt PAR}.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To analyze the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/Z3$\_$model/bin
+ \\./anal$\_\$$(PAR).x -f CONFIGURATION$\_$FILE
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameter is the name of the file where the configurations are stored (same
+  name from {\it bin/worm$\_$par.start}).
+  \item The executable {\tt anal$\_\$$(PAR).x} reads the {\tt CONFIGURATION$\_$FILE} file 
+  and creates a text file {\tt CONFIGURATION$\_$FILEobs} with the observables and error bars.
+ \end{itemize}
+
+\end{itemize}
+
+
+
+\subsection*{Simulation of the U(1) gauge-Higgs model}
+\begin{itemize}[leftmargin=*]
+ \item To compile the configuration files:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model/
+ \\make ran   
+ \\make SIZE=4 gen
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt SIZE} is the size of the lattice.
+  \item The configurations are generated as a function of $\beta$.
+  \item The executable file is created in {\it bin/}
+  \item External libraries: GSL and BLAS.
+ \end{itemize}
+ 
+ \item To generate the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model/bin
+ \\./gen$\$$(SIZE).x   
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameters are located in {\it bin/worm$\_$beta.start}.
+  \item The executable {\tt gen$\$$(SIZE).x} reads the file with the input parameters and creates
+  a binary file with the configurations.
+ \end{itemize}
+ 
+ 
+
+ \item To compile the analysis program:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model/
+ \\make anal
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The observables are function of the variable $\beta$.
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To analyze the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model/bin
+ \\./anal.x -f CONFIGURATION$\_$FILE
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameter is the name of the file where the configurations are stored (same
+  name from {\it bin/worm$\_$beta.start}).
+  \item The executable {\tt anal.x} reads the {\tt CONFIGURATION$\_$FILE} file 
+  and creates a text file {\tt CONFIGURATION$\_$FILEobs} with the observables and error bars.
+ \end{itemize}
+\end{itemize}
+
+
+
+\subsection*{Simulation of the U(1) gauge-Higgs model with two scalar fields}
+\begin{itemize}[leftmargin=*]
+ \item To compile the configuration files:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/
+ \\make ran   
+ \\make NS=4 NT=4 gen
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The variable {\tt NS} is the length of the spatial direction of the lattice.
+  \item The variable {\tt NT} is the length of the temporal direction of the lattice.
+  \item The executable file is created in {\it bin/}
+  \item External libraries: GSL, BLAS and the include files of the BOOST library.
+ \end{itemize}
+ 
+ \item To generate the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/bin
+ \\mpiexec -np 2 ./gen$\$$(NS)x$\$$(NT).x [OPTION] ... [OUTPUT$\_$FILE]
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item {\tt gen$\$$(NS)x$\$$(NT).x} is an {\tt MPI} program.  The number of processes is equal
+  to the number of points in the parameter space.
+  \item The executable {\tt gen$\$$(NS)x$\$$(NT).x} reads the input parameters 
+  and creates a binary file per process with the total value of occupation numbers.
+  The output files are named: {\tt OUTPUT$\_$FILE$\_$PROCESSID.out}.
+  \item The input parameters are:
+  \begin{itemize}[leftmargin=*]
+   \item {\it -l}: lambda.
+   \item {\it -K}: initial value of $\kappa$.
+   \item {\it -k}: step size for $\kappa$.
+   \item {\it -B}: initial value of $\beta$.
+   \item {\it -b}: step size for $\beta$.
+   \item {\it -M}: initial value of $\mu$.
+   \item {\it -m}: step size for $\mu$.
+   \item {\it -n}: number of measurements.
+   \item {\it -s}: discarded steps between measurements.
+   \item {\it -e}: equilibration steps.
+   \item {\it -r}: Read initial configuration from {\tt INPUT$\_$FILE} file (for hot start).
+   \item {\it -h}: Flag. Print options.
+   \item {\it OUTPUT$\_$FILE}: name of the output file (without extension).
+  \end{itemize}
+  
+  \item After the program has finished running, a file with the state of the last full configuration 
+  (values of occupation number per variable) will be written in {\tt OUTPUT$\_$FILE$\_$PROCESSID.out.conf}
+  
+  \vspace*{4mm}
+  \item {\bf Example 1:} Generate data for 4 values of $\mu$, starting at $\mu = 1$ with steps of $\Delta\mu=0.1$. 
+  For $\lambda =1$, $\beta=1$, $\kappa=5$, on a lattice of size $12^4\times4$.  With 1000 measurements, 1000 equilibration
+  steps and 10 skip steps.  With cold start.
+  \vspace*{2mm}
+  \texttt{
+  \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/bin
+  \\mpiexec -np 4 ./gen12x4.x -l 1 -B 1 -b 0 -K 5 -k 0 -M 1 -m 0.1 -n 1000 -e 1000 -s 10 outfile
+  }
+  \vspace*{2mm}
+  \\The output files are:  
+  \\outfile$\_$0.out for: $\lambda =1$, $\beta=1$, $\kappa=5$, $\mu = 1$
+  \\outfile$\_$0.out.conf : file with last full configuration.
+  \\outfile$\_$1.out for: $\lambda =1$, $\beta=1$, $\kappa=5$, $\mu = 1.1$
+  \\outfile$\_$1.out.conf : file with last full configuration.
+  \\outfile$\_$2.out for: $\lambda =1$, $\beta=1$, $\kappa=5$, $\mu = 1.2$
+  \\outfile$\_$2.out.conf : file with last full configuration.
+  \\outfile$\_$3.out for: $\lambda =1$, $\beta=1$, $\kappa=5$, $\mu = 1.3$
+  \\outfile$\_$3.out.conf : file with last full configuration.
+ 
+ \vspace*{4mm}
+  \item {\bf Example 2:} Generate data for 2 values of $\beta$, starting at $\beta = 0.8$ with steps of $\Delta\beta=0.25$. 
+  For $\lambda =0.5$, $\mu=0$, $\kappa=3$, on a lattice of size $8^4\times4$.  With 1000 measurements, 100 equilibration
+  steps and 10 skip steps.  With hot start, initial configuration stored in {\tt initialconfig.out}.
+  \vspace*{2mm}
+  \texttt{
+  \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/bin
+  \\mpiexec -np 2 ./gen8x4.x -l 0.5 -B 0.8 -b 0.25 -K 3 -k 0 -M 0 -m 0 -n 1000 -e 100 -s 10 -r initialconfig.out outfile2
+  }
+%   \vspace*{2mm}
+  \\The output files are:  
+  \\outfile2$\_$0.out for: $\lambda =0.5$, $\beta=0.8$, $\kappa=3$, $\mu = 0$
+  \\outfil2e$\_$0.out.conf : file with last full configuration.
+  \\outfile2$\_$1.out for: $\lambda =0.5$, $\beta=0.825$, $\kappa=3$, $\mu = 0$
+  \\outfile2$\_$0.out.conf : file with last full configuration.
+ \end{itemize}
+
+ \newpage
+ \item To compile the analysis program:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/
+ \\make anal
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The executable file is created in {\it bin/}
+ \end{itemize}
+ 
+ \item To analyze the configurations:
+ \vspace*{2mm}
+ \texttt{
+ \\cd gauge$\_$Higgs$\_$model/U1$\_$model$\_$2flavors/bin
+ \\./anal.x -f CONFIGURATION$\_$FILE
+ }
+
+ \begin{itemize}[leftmargin=*]
+  \item The input parameter is the name of the file where the configurations are stored 
+  ({\tt CONFIGURATION$\_$FILE = OUTPUT$\_$FILE}).
+  \item The executable {\tt anal.x} reads all the configuration files created by the generation program 
+  and writes the observables and error bars in the text file {\tt CONFIGURATION$\_$FILE.obs}.
+  \item The analysis program can read any number of measurements (not only the value given in the input parameters).
+  For example, if the job stops in the middle of the generation of configurations, then the analysis program will take
+  only the finished measurements.
+ \end{itemize}
+\end{itemize}
+
+
+\subsection*{BUGS/COMMENTS}
+Contact: Ydalia Delgado (ydelgado83@gmail.com)
+
+
+
+\end{document}

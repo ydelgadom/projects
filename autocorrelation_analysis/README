@@ -1,0 +1,28 @@
+2010 10 21 HGE
+
+"ttpackage" is a (rather old) standalone program to analyze timeseries data
+for autocorrelations.
+
+Executable linux-pc files are tt_pc_opt_long and tt_pc_opt_long_dbl.
+
+It works interactively (or with a prepared input file),
+reading data from a specified file.
+Data: One line per timestep, with measurements of one or several different quantities.
+The data format can be specified interactively.
+
+Output: Mainly autocorrelation analysis, printed on standard output.
+        (Optional: timeseries, histogram)
+
+Plots can also be produced, especially of the autocorrelation functions and
+their fits, producing several estimates of integrated and exponential autocorrelation times.
+
+They go to file "fort.3" in human readable "topdrawer" input format.
+(Ancient package, similar to gnuplot...)
+The text printed in those plots is similar to that printed on standard output.
+An example containing 2 autocorrelation functions is provided.
+
+It is often worthwhile to look at the autocorrelation functions.
+As a work-around, the actual autocorrelation data can be extracted with a text editor and fed
+into gnuplot (Exponential like "D-02" may have to be changed to "E-02")
+
+For more comments, see the program parts ttgeneric.f and ttana_37.f
