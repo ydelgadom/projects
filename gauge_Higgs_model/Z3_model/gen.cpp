@@ -1,14 +1,14 @@
 /************************************************************************
 * Program to generate configurations for different values of $PAR (BETA or MU)
-*	in the dual representation of the Z(3) gauge-Higgs model (only 1 flavor).
-*	See references in ../papers
+* in the dual representation of the Z(3) gauge-Higgs model (only 1 flavor).
+* See references in ../papers
 *
-*	Input file: ./bin/worm_$PAR.start
+* Input file: ./bin/worm_$PAR.start
 * ./bin/worm_$PAR.start contains the input parameters
-*	
-*	To execute: ./bin/gen$(SIZE)_$PAR.x
+* 
+* To execute: ./bin/gen$(SIZE)_$PAR.x
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>
@@ -42,12 +42,12 @@ int main( )
 #ifdef MU
     mu = par0 + ipar*dpar;
 #else
-		beta = par0 + ipar*dpar;
+    beta = par0 + ipar*dpar;
 #endif
     printf( "%d - beta = %8.6f - mu = %8.6f\n", ipar, beta, mu );
 
-		/* compute link and site weights*/
-	  calculate_bbt_weight( );
+    /* compute link and site weights*/
+    calculate_bbt_weight( );
     calculate_link4weights();
 
     /* generates nequi*nsite worms for equilibration */

@@ -2,7 +2,7 @@
 * Analysis program:
 * Calculates bulk observables and susceptibilities of the Z_3 Gauge-Higgs model.
 *
-*	To execute: ./bin/anal_$PAR.x -f file_with_configs
+* To execute: ./bin/anal_$PAR.x -f file_with_configs
 *
 * Compile with: make PAR=BETA anal
 *
@@ -60,11 +60,11 @@ void calculate_bbtweights();
 void calculate_link4weights();
 
 char texthelp[]="Usage: exec -f [FILE]\n"
-		"Analysis program of the Z(3) gauge-Higgs model in the dual rep.\n"
-		"\n"
-		"Mandatory arguments to long options are mandatory for short options too.\n"
-		"  -f, --F  File with the configurations\n"
-		"Report bugs to ydelgado83@gmail.com\n";
+    "Analysis program of the Z(3) gauge-Higgs model in the dual rep.\n"
+    "\n"
+    "Mandatory arguments to long options are mandatory for short options too.\n"
+    "  -f, --F  File with the configurations\n"
+    "Report bugs to ydelgado83@gmail.com\n";
 
 //-----------------------------------------------------------------------------   
 int main( int argc, char *argv[] )
@@ -73,10 +73,10 @@ int main( int argc, char *argv[] )
 
   processdata( argc, argv );
    
-	// print observables in output file
+  // print observables in output file
   file.open(outfile, ios::out | ios::trunc );
   for (int ipar = 0; ipar<=npar ; ipar++ )
-	{  
+  {  
     file << par[ipar]        << " "
          << linkaver[ipar]   << " " << linkerr[ipar]   << " "
          << slinkaver[ipar]  << " " << slinkerr[ipar]  << " "
@@ -95,11 +95,11 @@ int main( int argc, char *argv[] )
 //!------------------------------------------------------------------------
 void finalize(int it)
 {
-	/*
-		This subrouting computes the average values of the
-		observables and the errors (Jackknife is used
-		for the susceptibilities)
-	*/
+  /*
+    This subrouting computes the average values of the
+    observables and the errors (Jackknife is used
+    for the susceptibilities)
+  */
   int    im;
   double esum,efsum,efblock,cfsum;
   double msum,mfsum,mfblock,sfsum;
@@ -178,66 +178,66 @@ void finalize(int it)
 //!------------------------------------------------------------------------
 inline void getfilename( int &argc, char *argv[] )
 {
-	// Read name of file with configurations
-	if(argc<1) cout << endl << texthelp << endl;
+  // Read name of file with configurations
+  if(argc<1) cout << endl << texthelp << endl;
 
   int c;    
-	while (1)
-	{
-		static struct option long_options[] =
-			{
-			/* These options don't set a flag.
-			We distinguish them by their indices. */
-			{"F", required_argument, 0, 'f'},
-			{0, 0, 0, 0}
-			};
-			
-		/* getopt_long stores the option index here. */
-		int option_index = 0;
+  while (1)
+  {
+    static struct option long_options[] =
+      {
+      /* These options don't set a flag.
+      We distinguish them by their indices. */
+      {"F", required_argument, 0, 'f'},
+      {0, 0, 0, 0}
+      };
+      
+    /* getopt_long stores the option index here. */
+    int option_index = 0;
 
-		c = getopt_long (argc, argv, "f:",
-		long_options, &option_index);
+    c = getopt_long (argc, argv, "f:",
+    long_options, &option_index);
 
-		/* Detect the end of the options. */
-		if (c == -1)
-			break;
+    /* Detect the end of the options. */
+    if (c == -1)
+      break;
 
-		switch (c){
-			case 0:
-				/* If this option set a flag, do nothing else now. */
-				if (long_options[option_index].flag != 0)
-					break;
-				printf ("option %s", long_options[option_index].name);
-				if (optarg)
-					printf (" with arg %s", optarg);
-				printf ("\n");
+    switch (c){
+      case 0:
+        /* If this option set a flag, do nothing else now. */
+        if (long_options[option_index].flag != 0)
+          break;
+        printf ("option %s", long_options[option_index].name);
+        if (optarg)
+          printf (" with arg %s", optarg);
+        printf ("\n");
 
-			case 'f':
-				sprintf(infile,"%s",optarg);
-			  sprintf(outfile,"%sobs",infile);
-				cout << "Input File: " << infile << endl;
-  			cout << "Output file: " << outfile << endl;
-				break;
+      case 'f':
+        sprintf(infile,"%s",optarg);
+        sprintf(outfile,"%sobs",infile);
+        cout << "Input File: " << infile << endl;
+        cout << "Output file: " << outfile << endl;
+        break;
 
-			default:
-				cout << endl << texthelp << endl;
-		}
-	} 
+      default:
+        cout << endl << texthelp << endl;
+    }
+  } 
 }
    
 //!------------------------------------------------------------------------
 void processdata( int &argc, char *argv[] )
 {
-	// Local MC parameters
+  // Local MC parameters
   int nequi,nskip,iseed;
 
-	// Occupation numbers
+  // Occupation numbers
   int nnlink[3],nnplaq[3],nnlink4[3];
 
-	// Array with measurements from gen.cpp
+  // Array with measurements from gen.cpp
   int *nblock;
   
-	getfilename( argc, argv );
+  getfilename( argc, argv );
 
   file.open(infile, ios::in | ios::binary);
   file.read((char*)&leng,sizeof(int));
@@ -287,16 +287,16 @@ void processdata( int &argc, char *argv[] )
   {    
     par[ipar] = par0 + ipar*dpar;
 #ifdef MU
-		mu = par[ipar];
+    mu = par[ipar];
 #else
-		beta = par[ipar];
+    beta = par[ipar];
 #endif
     cout << "Reading beta= " << beta << " - mu = " << mu << endl;
 
-		// Compute weights
+    // Compute weights
     calculate_bbtweights();
-  	calculate_link4weights();
-	  		   
+    calculate_link4weights();
+           
     file.read( (char*)nblock, 9*nmeas*sizeof(int) );
 
     for ( int imeas = 0; imeas<nmeas; imeas++ )
@@ -337,7 +337,7 @@ void processdata( int &argc, char *argv[] )
 //_________________________________________________________________________
 void calculate_bbweights()
 {
-	bb  = ( exp(2.*gama) - exp(-gama) )/( exp(2.*gama) + 2.*exp(-gama) );
+  bb  = ( exp(2.*gama) - exp(-gama) )/( exp(2.*gama) + 2.*exp(-gama) );
 }
 
 //_________________________________________________________________________
@@ -347,7 +347,7 @@ void calculate_bbtweights()
   dbbt = 9. / ( 2.*( exp(1.5*beta) + 4.*exp(-1.5*beta) + 4. ) ) ; 
   aa  = 9. / ( 2.*( exp(1.5*beta) - 2.*exp(-1.5*beta) + 1. ) ) ;  // dbbt/bbt
   kk  =  -4.5 * ( (1.5*exp(1.5*beta) - 6.*exp(-1.5*beta))
-			/pow((exp(1.5*beta) + 4.*exp(-1.5*beta) + 4.),2) ) / bbt - aa*aa;
+      /pow((exp(1.5*beta) + 4.*exp(-1.5*beta) + 4.),2) ) / bbt - aa*aa;
 }
 
 //_________________________________________________________________________

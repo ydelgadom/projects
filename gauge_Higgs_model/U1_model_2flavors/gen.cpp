@@ -1,12 +1,12 @@
 /************************************************************************
 * Program to generate configurations for different values of beta 
-*	in the dual representation of the U(1) gauge-Higgs model (2 flavors).
-*	See references in ../papers
-*	
-*	To execute: 
-*			./bin/gen$(SIZE).x -[parameters] (list of input parameters in init.h)
+* in the dual representation of the U(1) gauge-Higgs model (2 flavors).
+* See references in ../papers
+* 
+* To execute: 
+*     ./bin/gen$(SIZE).x -[parameters] (list of input parameters in init.h)
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>
@@ -48,42 +48,42 @@ int main(int argc, char *argv[])
   //  Determine this process's rank.
   id = MPI::COMM_WORLD.Get_rank ( );
 
-	//  Process input parameters and initilizes arrays,lattice, etc...
+  //  Process input parameters and initilizes arrays,lattice, etc...
   init( argc, argv, iseed + 100*id );
 
-	//  Each core generates configurations for 1 set of parameters
+  //  Each core generates configurations for 1 set of parameters
   beta = beta0 + id*dbeta;
   mu = mu0 + id*dmu;
   kappa = kappa0 + id*dkappa;
 
-	//  Compute weights
+  //  Compute weights
   calculate_Ibeta( beta );
   calculate_Pn( lambda, kappa );
 
   int gslerr;
   if ( sub_leng != leng && sub_leng>0 )
   {
-		cout << "Multigrid equilibration " << endl;
-		// 90% of equilibration steps performed in a smaller lattice.
+    cout << "Multigrid equilibration " << endl;
+    // 90% of equilibration steps performed in a smaller lattice.
     gslerr = multigrid_equi( );
 
-		// 10% of equilibration steps in the full lattice
+    // 10% of equilibration steps in the full lattice
     gslerr = nsweeps( nequi/10, leng, nsite, vneib );
   }
   else
   {
-		cout << "Normal equilibration " << endl;
+    cout << "Normal equilibration " << endl;
 
-		// all equilibration steps in the full lattice
+    // all equilibration steps in the full lattice
     gslerr = nsweeps( nequi, leng, nsite, vneib );
   }
   for (int imeas=0 ; imeas<nmeas ; imeas++ )
   { 
-		// do nskip steps between 2 measurements
+    // do nskip steps between 2 measurements
     gslerr = nsweeps( nskip, leng, nsite, vneib );
     int nbytes = measure( gslerr );
 
-		// write to disk after each measurement.
+    // write to disk after each measurement.
     file.write( (char*)nblock, nbytes );
   }
   if ( gslerr != -1 ) write_conf( );

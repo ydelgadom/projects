@@ -37,7 +37,7 @@ int sweep_lprime( int lnsite, int neib[][8]  )
           int ffnew1 = ff1 + 2*delta;
           int absk = abs( vlink[is0][nu+4*ifield] );
 
-					ERROR_LINK(ffnew0,ffnew1);
+          ERROR_LINK(ffnew0,ffnew1);
 
           double weig =   Pn[ffnew0] - Pn[ff0]
                         + Pn[ffnew1] - Pn[ff1]
@@ -70,33 +70,33 @@ int sweep_lprime( int lnsite, int neib[][8]  )
 //_________________________________________________________________________
 inline void update_a(int *a, int* im, int *ip)
 {
-	a[abs(im[0])]--;
-	a[abs(im[1])]--;
-	a[abs(im[2])]--;
-	a[abs(im[3])]--;
-	a[abs(im[4])]--;
-	a[abs(im[5])]--;
+  a[abs(im[0])]--;
+  a[abs(im[1])]--;
+  a[abs(im[2])]--;
+  a[abs(im[3])]--;
+  a[abs(im[4])]--;
+  a[abs(im[5])]--;
 
-	a[abs(ip[0])]++;
-	a[abs(ip[1])]++;
-	a[abs(ip[2])]++;
-	a[abs(ip[3])]++;
-	a[abs(ip[4])]++;
-	a[abs(ip[5])]++;
+  a[abs(ip[0])]++;
+  a[abs(ip[1])]++;
+  a[abs(ip[2])]++;
+  a[abs(ip[3])]++;
+  a[abs(ip[4])]++;
+  a[abs(ip[5])]++;
 }
 
 //_________________________________________________________________________
 inline double weight(int *ppnew, int *pp )
 {
-	double weig = In[abs(ppnew[0])] - In[abs(pp[0])] + 
-			          In[abs(ppnew[1])] - In[abs(pp[1])] + 
-			          In[abs(ppnew[2])] - In[abs(pp[2])] + 
-			          In[abs(ppnew[3])] - In[abs(pp[3])] + 
-			          In[abs(ppnew[4])] - In[abs(pp[4])] + 
-			          In[abs(ppnew[5])] - In[abs(pp[5])];
+  double weig = In[abs(ppnew[0])] - In[abs(pp[0])] + 
+                In[abs(ppnew[1])] - In[abs(pp[1])] + 
+                In[abs(ppnew[2])] - In[abs(pp[2])] + 
+                In[abs(ppnew[3])] - In[abs(pp[3])] + 
+                In[abs(ppnew[4])] - In[abs(pp[4])] + 
+                In[abs(ppnew[5])] - In[abs(pp[5])];
    weig = exp( weig );
 
-	return weig;
+  return weig;
 }
 
 //_________________________________________________________________________
@@ -140,7 +140,7 @@ void sweep_cube012( )
       vplaq[xx[3]][0+1-1] = ppnew[4];
       vplaq[xx[0]][0+1-1] = ppnew[5];
 
-			update_a(nplaq, pp, ppnew);
+      update_a(nplaq, pp, ppnew);
     }
   }
 
@@ -186,7 +186,7 @@ void sweep_cubexy3( int x, int y )
       vplaq[xx[3]][x+y-1] = ppnew[4];
       vplaq[xx[0]][x+y-1] = ppnew[5];
 
-			update_a(nplaq, pp, ppnew);
+      update_a(nplaq, pp, ppnew);
     }
   }
 }
@@ -196,8 +196,8 @@ void sweep_cube( )
 {
   sweep_cube012( );
   sweep_cubexy3( 0, 1 );
-	sweep_cubexy3( 0, 2 );
-	sweep_cubexy3( 1, 2 );
+  sweep_cubexy3( 0, 2 );
+  sweep_cubexy3( 1, 2 );
 }
 
 #endif
@@ -234,7 +234,7 @@ int sweep_winding_loop( int vleng, int neib[][8] )
           ffnew[0] = vflux[xx][0] + abs(link[i0][0] + delta) - abs(link[i0][0]) + abs(link[iold][0] + delta) - abs(link[iold][0]);
           ffnew[1] = vflux[xx][1] + abs(link[i0][1] + delta) - abs(link[i0][1]) + abs(link[iold][1] + delta) - abs(link[iold][1]);
 
-					ERROR_LINK(ffnew[0],ffnew[1]);
+          ERROR_LINK(ffnew[0],ffnew[1]);
 
           weig += ( Pn[ffnew[0]] - Pn[vflux[xx][0]] + Pn[ffnew[1]] - Pn[vflux[xx][1]]
                     + fac[ abs(link[i0][0]) + vllink[xx][0] ] - fac[ abs(link[i0][0] + delta) + vllink[xx][0] ]
@@ -342,7 +342,7 @@ int sweep_winding_loop( int vleng, int neib[][8] )
           ffnew[0] = vflux[xx][0] + abs(link[i2][0] + delta) - abs(link[i2][0]) + abs(link[iold][0] + delta) - abs(link[iold][0]);
           ffnew[1] = vflux[xx][1] + abs(link[i2][1] + delta) - abs(link[i2][1]) + abs(link[iold][1] + delta) - abs(link[iold][1]);
 
-					ERROR_LINK(ffnew[0],ffnew[1]);
+          ERROR_LINK(ffnew[0],ffnew[1]);
 
           weig += ( Pn[ffnew[0]] - Pn[vflux[xx][0]] + Pn[ffnew[1]] - Pn[vflux[xx][1]]
                     + fac[ abs(link[i2][0]) + vllink[xx][2] ] - fac[ abs(link[i2][0] + delta) + vllink[xx][2] ]
@@ -396,7 +396,7 @@ int sweep_winding_loop( int vleng, int neib[][8] )
           ffnew[0] = vflux[xx][0] + abs(link[i3][0] + delta) - abs(link[i3][0]) + abs(link[iold][0] + delta) - abs(link[iold][0]);
           ffnew[1] = vflux[xx][1] + abs(link[i3][1] + delta) - abs(link[i3][1]) + abs(link[iold][1] + delta) - abs(link[iold][1]);
 
-					ERROR_LINK(ffnew[0],ffnew[1]);
+          ERROR_LINK(ffnew[0],ffnew[1]);
 
           weig += ( Pn[ffnew[0]] - Pn[vflux[xx][0]] + Pn[ffnew[1]] - Pn[vflux[xx][1]]
                     + fac[ abs(link[i3][0]) + vllink[xx][3] ] - fac[ abs(link[i3][0] + delta) + vllink[xx][3] ]

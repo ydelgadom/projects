@@ -68,11 +68,11 @@ void calculate_Ibeta( double bb )
     //cout << "In " << i << " " << In[i] << endl;
 
 #ifdef ANALYSIS
-	  double Inp1 = gsl_sf_bessel_In ( i+1, bb );
+    double Inp1 = gsl_sf_bessel_In ( i+1, bb );
     dIn[i]  = ((double)i)/bb + Inp1/In[i];
     d2In[i] = ((double)(i*(i-1))) / pow(bb,2) + 
               ( (((double)(2*i+1))/bb) * Inp1 + gsl_sf_bessel_In(i+2, bb) ) 
-							/ In[i];
+              / In[i];
 #else
     if (In[i]>0) 
       In[i] = log( In[i] );

@@ -38,7 +38,7 @@ tlink link0;
 segment seg;
 
 //-----------------------------------------------------------------------------------------------------
-//	Subroutines
+//  Subroutines
 //-----------------------------------------------------------------------------------------------------
 
 #define ERROR(x,y) \
@@ -343,21 +343,21 @@ void get_current_segments_and_links( int rho, int sseg, int *xf, int ifield, int
 //-----------------------------------------------------------------------------------------------------
 inline void a_eq_b(int *a, int*b )
 {
-	a[0] = b[0];
-	a[1] = b[1];
-	a[2] = b[2];
-	a[3] = b[3];
-	a[4] = b[4];
+  a[0] = b[0];
+  a[1] = b[1];
+  a[2] = b[2];
+  a[3] = b[3];
+  a[4] = b[4];
 }
 
 //-----------------------------------------------------------------------------------------------------
 inline void a_eq_mb(int *a, int*b )
 {
-	a[0] = -b[0];
-	a[1] = -b[1];
-	a[2] = -b[2];
-	a[3] = -b[3];
-	a[4] = -b[4];
+  a[0] = -b[0];
+  a[1] = -b[1];
+  a[2] = -b[2];
+  a[3] = -b[3];
+  a[4] = -b[4];
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -376,7 +376,7 @@ inline double seg_weight( int *newvalseg, int *ffnew, int *ff, int *ll )
 //-----------------------------------------------------------------------------------------------------
 inline double link_weight( int *ffnew, int *ff, int ll, int newvalseg )
 {
-	double weig =   Pn[ffnew[0]] - Pn[ff[0]]
+  double weig =   Pn[ffnew[0]] - Pn[ff[0]]
                 + Pn[ffnew[1]] - Pn[ff[1]]
                 + fac[ abs(seg.slink[2].lval) + ll ] - fac[ abs(newvalseg) + ll ];
   return exp( weig );
@@ -403,7 +403,7 @@ int move0( int ifield, int lnsite, int neib[][8] )
   ffnew[0] = ff[0] + abs(newvalseg) - abs(seg.slink[2].lval);
   ffnew[1] = ff[1] + abs(newvalseg) - abs(seg.slink[2].lval);
 
-	ERROR(ffnew[0],ffnew[1]);
+  ERROR(ffnew[0],ffnew[1]);
 
   if ( ran[3] <= link_weight(ffnew,ff,ll, newvalseg) )
   {
@@ -450,7 +450,7 @@ int move1( int ifield, int neib[][8] )
     ffnew[0] = ff[0] + abs(newvalseg) - abs(seg.slink[2].lval);
     ffnew[1] = ff[1] + abs(newvalseg) - abs(seg.slink[2].lval);
 
-		ERROR(ffnew[0],ffnew[1]);
+    ERROR(ffnew[0],ffnew[1]);
 
     if ( ran[1] <= link_weight(ffnew,ff,ll,newvalseg) )
     {
@@ -512,9 +512,9 @@ int move1( int ifield, int neib[][8] )
       delta_seg[4] = -1;
 
     if ( link0.lval != delta_seg[seg.slink[2].lidx] )
-			a_eq_mb( delta, delta_seg );
+      a_eq_mb( delta, delta_seg );
     else
-			a_eq_b( delta, delta_seg );
+      a_eq_b( delta, delta_seg );
 
     int newvalseg[3];
     newvalseg[0] = seg.slink[0].lval + delta[seg.slink[0].lidx];
@@ -550,8 +550,8 @@ int move1( int ifield, int neib[][8] )
       ffnew[2] = ff[2] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
       ffnew[3] = ff[3] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
     }
-		ERROR(ffnew[0],ffnew[1]);
-		ERROR(ffnew[2],ffnew[3]);
+    ERROR(ffnew[0],ffnew[1]);
+    ERROR(ffnew[2],ffnew[3]);
 
     // calculate probability
     if ( ran[1] <= seg_weight(newvalseg,ffnew,ff,ll) )
@@ -603,7 +603,7 @@ int move1( int ifield, int neib[][8] )
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
 
       return 2;
       // accepted update 
@@ -685,9 +685,9 @@ int move( int ifield, int neib[][8] )
     if (rho==oldrho)
     {
       if (seg.sdirmove==oldsignseg) // go back
-      	a_eq_mb( delta, delta_seg );
+        a_eq_mb( delta, delta_seg );
       else
-      	a_eq_b( delta, delta_seg );
+        a_eq_b( delta, delta_seg );
     }
     else
     {
@@ -695,16 +695,16 @@ int move( int ifield, int neib[][8] )
       if (var==1)
       {
         if (seg.sdirmove!=oldsignseg)
-        	a_eq_mb( delta, delta_seg ); 
+          a_eq_mb( delta, delta_seg ); 
         else
-        	a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
       else 
       {
         if (seg.sdirmove==oldsignseg)
-        	a_eq_mb( delta, delta_seg );
+          a_eq_mb( delta, delta_seg );
         else
-        	a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
     }
     int newvalseg[3];
@@ -742,8 +742,8 @@ int move( int ifield, int neib[][8] )
       ffnew[3] = ff[3] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
     }
 
-   	ERROR(ffnew[0],ffnew[1]);
-		ERROR(ffnew[2],ffnew[3]);
+    ERROR(ffnew[0],ffnew[1]);
+    ERROR(ffnew[2],ffnew[3]);
 
     // calculate probability
     if ( ran[1] <= seg_weight(newvalseg,ffnew,ff,ll) )
@@ -795,7 +795,7 @@ int move( int ifield, int neib[][8] )
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
     }// accepted update
   
     return 2;

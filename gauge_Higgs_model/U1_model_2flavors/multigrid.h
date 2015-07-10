@@ -1,19 +1,19 @@
 #ifndef _MULTIGRID_H
 #define _MULTIGRID_H
 
-	/*
-		Performs 90% of equilibration steps 
-		on a smaller part of the lattice: sub_leng^3*Nt (leng must be a multiple of sub_leng).
-		Then, this sublattice is replicated in the full lattice.
-	*/
+  /*
+    Performs 90% of equilibration steps 
+    on a smaller part of the lattice: sub_leng^3*Nt (leng must be a multiple of sub_leng).
+    Then, this sublattice is replicated in the full lattice.
+  */
 
 int multigrid_equi( )
 {
-	// Array with neighbours in the smaller lattice
+  // Array with neighbours in the smaller lattice
   int sneib[snsite][8];
   init_lattice( sub_leng, sneib );
 
-	// Do equilibration sweeps
+  // Do equilibration sweeps
   if ( nsweeps( 9*nequi/10, sub_leng, snsite, sneib ) < 0 ) return -1;
 #ifdef CHECK
   check( snsite, sneib );
@@ -25,7 +25,7 @@ int multigrid_equi( )
   memcpy( &tmplink[0][0], &vlink[0][0], snsite*8*sizeof(int) );
   memcpy( &tmpllink[0][0], &vllink[0][0], snsite*8*sizeof(int) );
 
-	// Replicate sublattice
+  // Replicate sublattice
   int factor = (leng/sub_leng);
   int il[3];
   for ( il[2]=0 ; il[2]<factor ; il[2]++ )

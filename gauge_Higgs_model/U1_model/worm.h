@@ -2,19 +2,19 @@
 #define _WORM_H
 
 /************************************************************************* 
-*		This file contains:
+*   This file contains:
 *
-*		Total update:
-*		void nworms(int nw)
+*   Total update:
+*   void nworms(int nw)
 *
-*		Worm update for constrained variables:
-*		void move0()
-*		void move1()
-*		void move()
-*		void get_current_segments_and_links( int rho, int sseg, int *xf )
+*   Worm update for constrained variables:
+*   void move0()
+*   void move1()
+*   void move()
+*   void get_current_segments_and_links( int rho, int sseg, int *xf )
 *
-*		Update of unconstrained variables:
-*		void sweep_l( )
+*   Update of unconstrained variables:
+*   void sweep_l( )
 *
 *------------------------------------------------------------------------------
 *
@@ -51,8 +51,8 @@
 #define NWORMS nsite
 
 #define ERROR_WORM(x) \
-			if ((x)>=LENGTH_FLUX) \
-					{ cout << "FATAL ERROR WORM: flux>max_length" << endl; exit(-1); }
+      if ((x)>=LENGTH_FLUX) \
+          { cout << "FATAL ERROR WORM: flux>max_length" << endl; exit(-1); }
 
 #define ERROR_PLAQ(x) \
     if (abs((x))>=LENGTH) { cout << "FATAL ERROR plaq: plaq>max_length" << endl; exit(-1); }
@@ -90,19 +90,19 @@ segment seg;
 //_________________________________________________________________________
 inline void a_eq_b(int *a, int*b )
 {
-	a[0] = b[0];
-	a[1] = b[1];
-	a[2] = b[2];
-	a[3] = b[3];
+  a[0] = b[0];
+  a[1] = b[1];
+  a[2] = b[2];
+  a[3] = b[3];
 }
 
 //________________________________________________________________________
 inline void a_eq_mb(int *a, int*b )
 {
-	a[0] = -b[0];
-	a[1] = -b[1];
-	a[2] = -b[2];
-	a[3] = -b[3];
+  a[0] = -b[0];
+  a[1] = -b[1];
+  a[2] = -b[2];
+  a[3] = -b[3];
 }
 
 //________________________________________________________________________
@@ -401,9 +401,9 @@ void get_current_segments_and_links( int rho, int sseg, int *xf )
 //_________________________________________________________________________
 void move0()
 {
-	//
-	// Insert first link
-	//
+  //
+  // Insert first link
+  //
   double ran[4];
   ranlxd( ran, 4 );
   seg.slink[2].lx = int(ran[0]*nsite);
@@ -422,9 +422,9 @@ void move0()
   ffnew[0] = ff[0] + abs(newvalseg) - abs(seg.slink[2].lval);
   ffnew[1] = ff[1] + abs(newvalseg) - abs(seg.slink[2].lval);
 
-	// Check if fluxes > maximum
-	ERROR_WORM(ffnew[0]);
- 	ERROR_WORM(ffnew[1]);
+  // Check if fluxes > maximum
+  ERROR_WORM(ffnew[0]);
+  ERROR_WORM(ffnew[1]);
 
   double weig = Pn[ffnew[0]] - Pn[ff[0]]
          + Pn[ffnew[1]] - Pn[ff[1]]
@@ -454,9 +454,9 @@ void move0()
 //_________________________________________________________________________
 void move1()
 {
-	// 
-	// The worm tries to insert the first segment
-	//
+  // 
+  // The worm tries to insert the first segment
+  //
   double ran[2];
   ranlxd(ran,2);
   int rho = int(ran[0]*4); 
@@ -474,9 +474,9 @@ void move1()
     ffnew[0] = ff[0] + abs(newvalseg) - abs(seg.slink[2].lval);
     ffnew[1] = ff[1] + abs(newvalseg) - abs(seg.slink[2].lval);
 
-		// Check if fluxes > maximum
-		ERROR_WORM(ffnew[0]);
-	 	ERROR_WORM(ffnew[1]);
+    // Check if fluxes > maximum
+    ERROR_WORM(ffnew[0]);
+    ERROR_WORM(ffnew[1]);
 
     double weig = Pn[ffnew[0]] - Pn[ff[0]]
            + Pn[ffnew[1]] - Pn[ff[1]]
@@ -526,9 +526,9 @@ void move1()
     // select sign:
     int delta[5];
     if ( link0.lval != delta_seg[seg.slink[2].lidx] )
-			a_eq_mb( delta, delta_seg );
+      a_eq_mb( delta, delta_seg );
     else
-			a_eq_b( delta, delta_seg );
+      a_eq_b( delta, delta_seg );
 
     int newvalseg[3];
     newvalseg[0] = seg.slink[0].lval + delta[seg.slink[0].lidx];
@@ -564,12 +564,12 @@ void move1()
       ffnew[2] = ff[2] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
       ffnew[3] = ff[3] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
     }
-		// Check if fluxes > maximum
-		ERROR_PLAQ(newvalseg[2]);
-		ERROR_WORM(ffnew[0]);	
-	 	ERROR_WORM(ffnew[1]);
-		ERROR_WORM(ffnew[2]);
- 		ERROR_WORM(ffnew[3]);
+    // Check if fluxes > maximum
+    ERROR_PLAQ(newvalseg[2]);
+    ERROR_WORM(ffnew[0]); 
+    ERROR_WORM(ffnew[1]);
+    ERROR_WORM(ffnew[2]);
+    ERROR_WORM(ffnew[3]);
 
     // calculate probability
     double weig = In[abs(newvalseg[2])]  - In[abs(seg.svplaq)]
@@ -628,7 +628,7 @@ void move1()
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
     }// accepted update
   }
 }
@@ -652,8 +652,8 @@ void move( )
     ffnew[0] = ff[0] + abs(newvalseg) - abs(seg.slink[2].lval);
     ffnew[1] = ff[1] + abs(newvalseg) - abs(seg.slink[2].lval);
 
-		ERROR_WORM(ffnew[0]);	
-	 	ERROR_WORM(ffnew[1]);
+    ERROR_WORM(ffnew[0]); 
+    ERROR_WORM(ffnew[1]);
 
     double weig = Pn[ffnew[0]] - Pn[ff[0]]
            + Pn[ffnew[1]] - Pn[ff[1]]
@@ -705,9 +705,9 @@ void move( )
     if (rho==oldrho)
     {
       if (seg.sdirmove==oldsignseg) // go back
-				a_eq_mb( delta, delta_seg );
+        a_eq_mb( delta, delta_seg );
       else
-				a_eq_b( delta, delta_seg );
+        a_eq_b( delta, delta_seg );
     }
     else
     {
@@ -715,16 +715,16 @@ void move( )
       if (var==1)
       {
         if (seg.sdirmove!=oldsignseg)
-					a_eq_mb( delta, delta_seg );
+          a_eq_mb( delta, delta_seg );
         else
-					a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
       else 
       {
         if (seg.sdirmove==oldsignseg)
-					a_eq_mb( delta, delta_seg );
+          a_eq_mb( delta, delta_seg );
         else
-					a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
     }
     int newvalseg[3];
@@ -761,12 +761,12 @@ void move( )
       ffnew[2] = ff[2] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
       ffnew[3] = ff[3] + abs(newvalseg[1]) - abs(seg.slink[1].lval);
     }
-		// Check if fluxes > maximum
-		ERROR_PLAQ(newvalseg[2]);
-		ERROR_WORM(ffnew[0]);	
-	 	ERROR_WORM(ffnew[1]);
-		ERROR_WORM(ffnew[2]);
- 		ERROR_WORM(ffnew[3]);
+    // Check if fluxes > maximum
+    ERROR_PLAQ(newvalseg[2]);
+    ERROR_WORM(ffnew[0]); 
+    ERROR_WORM(ffnew[1]);
+    ERROR_WORM(ffnew[2]);
+    ERROR_WORM(ffnew[3]);
 
     // calculate probability
     double weig = In[abs(newvalseg[2])]  - In[abs(seg.svplaq)]
@@ -823,7 +823,7 @@ void move( )
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
     }// accepted update
   }
 }
@@ -836,34 +836,34 @@ void nworms(int nw)
     int inw = 0;
     while ( inw < NWORMS )
     {
-	    bool unsuccessful_worm = true;
-	    do{
-	      double ran;
-	      ranlxd( &ran, 1 );
-	      delta_seg[0] = 1-2*(ran<0.5);
-	      delta_seg[1] = delta_seg[0];
-	      delta_seg[2] = -delta_seg[1];
-	      delta_seg[3] = delta_seg[2];
-	      delta_seg[4] = delta_seg[3];
+      bool unsuccessful_worm = true;
+      do{
+        double ran;
+        ranlxd( &ran, 1 );
+        delta_seg[0] = 1-2*(ran<0.5);
+        delta_seg[1] = delta_seg[0];
+        delta_seg[2] = -delta_seg[1];
+        delta_seg[3] = delta_seg[2];
+        delta_seg[4] = delta_seg[3];
  
-	      insert_next_segment = 0;
+        insert_next_segment = 0;
 
-	      move0();
-	      while ( insert_next_segment == 1)
-	      {
-	        unsuccessful_worm = false;
-	        move1();
-	      };
-	      while ( insert_next_segment == 2 )
-	      {
-	        unsuccessful_worm = false;
-	        move();
-	      };
-	    }while(unsuccessful_worm);
-			inw++;
+        move0();
+        while ( insert_next_segment == 1)
+        {
+          unsuccessful_worm = false;
+          move1();
+        };
+        while ( insert_next_segment == 2 )
+        {
+          unsuccessful_worm = false;
+          move();
+        };
+      }while(unsuccessful_worm);
+      inw++;
     };
 
-		// sweep of unscontrained variables
+    // sweep of unscontrained variables
     sweep_l( );
   }
 }

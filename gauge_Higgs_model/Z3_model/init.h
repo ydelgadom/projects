@@ -3,12 +3,12 @@
 
 /***********************************************************************
 
-	This file containes the following subroutines:
+  This file containes the following subroutines:
 
-	void read_params()
-	void init()
-	void mk_arrays()
-	void rm_arrays()
+  void read_params()
+  void init()
+  void mk_arrays()
+  void rm_arrays()
 
 ***********************************************************************/
 
@@ -150,7 +150,7 @@ void init()
     vplaq[i][5] = 1;
   }
 
-	calculate_bb_weight( );
+  calculate_bb_weight( );
 
 }
 

@@ -1,14 +1,14 @@
 /************************************************************************
 * Program to generate configurations for different values of beta 
-*	in the dual representation of the U(1) gauge-Higgs model (only 1 flavor).
-*	See references in ../papers
+* in the dual representation of the U(1) gauge-Higgs model (only 1 flavor).
+* See references in ../papers
 *
-*	Input file: ./bin/worm_beta.start
+* Input file: ./bin/worm_beta.start
 * ./bin/worm_beta.start contains the input parameters
-*	
-*	To execute: ./bin/gen$(SIZE).x
+* 
+* To execute: ./bin/gen$(SIZE).x
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>

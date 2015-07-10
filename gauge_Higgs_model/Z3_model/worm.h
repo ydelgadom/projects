@@ -2,16 +2,16 @@
 #define _WORM_H
 
 /************************************************************************* 
-*		This file contains:
+*   This file contains:
 *
-*		Total update:
-*		void nworms(int nw)
+*   Total update:
+*   void nworms(int nw)
 *
-*		Worm update for constrained variables:
-*		void move0()
-*		void move1()
-*		void move()
-*		void get_current_segments_and_links( int rho, int sseg, int *xf )
+*   Worm update for constrained variables:
+*   void move0()
+*   void move1()
+*   void move()
+*   void get_current_segments_and_links( int rho, int sseg, int *xf )
 *
 *------------------------------------------------------------------------------
 *
@@ -324,29 +324,29 @@ void get_current_segments_and_links( int rho, int sseg )
 //________________________________________________________________________
 inline void a_eq_b(int *a, int *b )
 {
-	a[0] = b[0];
-	a[1] = b[1];
-	a[2] = b[2];
-	a[3] = b[3];
-	a[4] = b[4];
+  a[0] = b[0];
+  a[1] = b[1];
+  a[2] = b[2];
+  a[3] = b[3];
+  a[4] = b[4];
 }
 
 //________________________________________________________________________
 inline void a_eq_mb(int *a, int *b )
 {
-	a[0] = 2-b[0];
-	a[1] = 2-b[1];
-	a[2] = 2-b[2];
-	a[3] = 2-b[3];
-	a[4] = 2-b[4];
+  a[0] = 2-b[0];
+  a[1] = 2-b[1];
+  a[2] = 2-b[2];
+  a[3] = 2-b[3];
+  a[4] = 2-b[4];
 }
 
 //_________________________________________________________________________
 void move0()
 {
-	//
-	// Insert first link
-	//
+  //
+  // Insert first link
+  //
   double weig,ran[4];
 
   ranlxd(ran,4);
@@ -379,9 +379,9 @@ void move0()
 //_________________________________________________________________________
 void move1()
 {
-	// 
-	// The worm tries to insert the first segment
-	//
+  // 
+  // The worm tries to insert the first segment
+  //
   int sseg,newvalseg[3],delta[5];
   double weig,ran[2];
 
@@ -433,9 +433,9 @@ void move1()
 
     // select sign:
     if ( link0.lval != delta_seg[seg.slink[2].lidx] )
-			a_eq_mb( delta, delta_seg );
+      a_eq_mb( delta, delta_seg );
     else
-			a_eq_b( delta, delta_seg );
+      a_eq_b( delta, delta_seg );
 
     newvalseg[0] = triadd[ seg.slink[0].lval ][ delta[seg.slink[0].lidx] ];
     newvalseg[1] = triadd[ seg.slink[1].lval ][ delta[seg.slink[1].lidx] ];
@@ -484,7 +484,7 @@ void move1()
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
 
     }// accepted update
   }
@@ -544,9 +544,9 @@ void move()
     if (rho==oldrho)
     {
       if (seg.sdirmove==oldsignseg) /* worm visits last updated segment */
-				a_eq_mb( delta, delta_seg ); 
+        a_eq_mb( delta, delta_seg ); 
       else
-				a_eq_b( delta, delta_seg );
+        a_eq_b( delta, delta_seg );
     }
     else
     {
@@ -554,16 +554,16 @@ void move()
       if (var==1)
       {
         if (seg.sdirmove!=oldsignseg)
-				  a_eq_mb( delta, delta_seg ); 
+          a_eq_mb( delta, delta_seg ); 
         else
-					a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
       else 
       {
         if (seg.sdirmove==oldsignseg)
-					a_eq_mb( delta, delta_seg );
+          a_eq_mb( delta, delta_seg );
         else
-					a_eq_b( delta, delta_seg );
+          a_eq_b( delta, delta_seg );
       }
     }
     newvalseg[0] = triadd[ seg.slink[0].lval ][ delta[seg.slink[0].lidx] ];
@@ -611,7 +611,7 @@ void move()
       seg.slink[2].lval = seg.slink[3].lval;
       oldlidx2 = seg.slink[3].lidx;
 
-			a_eq_b( delta_seg, delta );
+      a_eq_b( delta_seg, delta );
     }// accepted update
   }
 }
@@ -627,29 +627,29 @@ void nworms(int nw)
     int inw= 0;
     while(inw < nsite)
     {
-	    unsuccessful_worm = true;
-  	  do{
-  	    ranlxd(ran,1);
-  	    delta_seg[0] = 2*(ran[0]<0.5);
-  	    delta_seg[1] = delta_seg[0];
-  	    delta_seg[2] = 2-delta_seg[1];
-  	    delta_seg[3] = delta_seg[2];
-  	    delta_seg[4] = delta_seg[3];
+      unsuccessful_worm = true;
+      do{
+        ranlxd(ran,1);
+        delta_seg[0] = 2*(ran[0]<0.5);
+        delta_seg[1] = delta_seg[0];
+        delta_seg[2] = 2-delta_seg[1];
+        delta_seg[3] = delta_seg[2];
+        delta_seg[4] = delta_seg[3];
  
-  	    insert_next_segment = 0;
-  	    move0();
+        insert_next_segment = 0;
+        move0();
 
-  	    while ( insert_next_segment == 1)
-  	    {
-  	      unsuccessful_worm = false;
-  	      move1();
-  	    };
-  	    while ( insert_next_segment == 2 )
-  	    {
-  	      unsuccessful_worm = false;
-  	      move();
-  	    };
-  	  }while(unsuccessful_worm);
+        while ( insert_next_segment == 1)
+        {
+          unsuccessful_worm = false;
+          move1();
+        };
+        while ( insert_next_segment == 2 )
+        {
+          unsuccessful_worm = false;
+          move();
+        };
+      }while(unsuccessful_worm);
       inw++;
     };
   }
