@@ -5,7 +5,7 @@
 // VARIABLES
 //-----------------------------
 
-#define MAXFLUX 80
+#define MAXFLUX 1
 
 char outfile[150];
 fstream file;

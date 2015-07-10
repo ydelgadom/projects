@@ -47,28 +47,28 @@ int main()
 #ifdef MU
     mu = par0 + ipar*dpar;
 #else
-		tau = par0 + ipar*dpar;
+    tau = par0 + ipar*dpar;
 #endif
     printf("%d - tau = %8.6f - kappa = %8.6f - mu = %8.6f\n",ipar,tau,kappa,mu);
 
-		// Compute dimer and monomer weights
-		init_vtau();
-		init_vemu();
-		init_vkappa();
+    // Compute dimer and monomer weights
+    init_vtau();
+    init_vemu();
+    init_vkappa();
 
-		// Thermalization steps
+    // Thermalization steps
     nsweeps(nequi);  
     for (int imeas=0; imeas<nmeas; imeas++){
-			// Discarded sweeps
+      // Discarded sweeps
       nsweeps(nskip);
-			// Measurements
+      // Measurements
       measure(imeas);
     }
     file.write((char*)nblock,4*nmeas*sizeof(int));
   }
   file.close();
   rm_arrays();
-
+  
   cout << "Done!!" << endl;
 
 }

@@ -24,10 +24,10 @@ ran : ranlxd.c
 	gcc $(CFLAGS) -c ranlxd.c
 
 gen: ranlxd.o gen.cpp
-	g++ $(CFLAGS) -D$(PAR) -DSIZE=$(SIZE) -o ./bin/gen$(SIZE)_rot_$(PAR).x gen.cpp ranlxd.o
+	g++-5 $(CFLAGS) -D$(PAR) -DSIZE=$(SIZE) -o ./bin/gen$(SIZE)_rot_$(PAR).x gen.cpp ranlxd.o
 
 anal: analysis.cpp
-	g++ $(CFLAGS) -D$(PAR) -o ./bin/anal_rot_$(PAR).x analysis.cpp
+	g++-5 $(CFLAGS) -D$(PAR) -o ./bin/anal_rot_$(PAR).x analysis.cpp
 
 clean:
 	rm -v *.o ./bin/*.x
