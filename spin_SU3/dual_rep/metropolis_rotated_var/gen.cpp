@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include <stdlib.h>
+#include <exception>
 using namespace std;
 
 extern "C"
@@ -51,20 +52,27 @@ int main()
 #endif
     printf("%d - tau = %8.6f - kappa = %8.6f - mu = %8.6f\n",ipar,tau,kappa,mu);
 
+    cout << "MAXFLUX = " << MAXFLUX << endl;
+
     // Compute dimer and monomer weights
     init_vtau();
     init_vemu();
     init_vkappa();
 
     // Thermalization steps
-    nsweeps(nequi);  
-    for (int imeas=0; imeas<nmeas; imeas++){
-      // Discarded sweeps
-      nsweeps(nskip);
-      // Measurements
-      measure(imeas);
+    try {
+      nsweeps(nequi);  
+      for (int imeas=0; imeas<nmeas; imeas++){
+        // Discarded sweeps
+        nsweeps(nskip);
+        // Measurements
+        measure(imeas);
+      }
+      file.write((char*)nblock,4*nmeas*sizeof(int));
     }
-    file.write((char*)nblock,4*nmeas*sizeof(int));
+    catch (exception& e) {
+       cout << e.what() << '\n';
+    }
   }
   file.close();
   rm_arrays();

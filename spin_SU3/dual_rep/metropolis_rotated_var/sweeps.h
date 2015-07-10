@@ -3,7 +3,7 @@
 
 /*********************************************************************
 
-	Subroutines in this file:
+  Subroutines in this file:
 
   void metropolis_k()
   void metropolis_kbar()
