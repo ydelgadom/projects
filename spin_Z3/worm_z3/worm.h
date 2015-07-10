@@ -3,17 +3,17 @@
 
 /**************************************************************************
 
-	This file contains:
+  This file contains:
 
-	Close worm:
-	void nworms(int nw)
-	void add_link()
+  Close worm:
+  void nworms(int nw)
+  void add_link()
 
-	Open worm:
-	void nworms_open(int nw)
-	void add_link_open()
+  Open worm:
+  void nworms_open(int nw)
+  void add_link_open()
 
-	The pseudo-code of both algorithms is in the CPC papers in ../../papers
+  The pseudo-code of both algorithms is in the CPC papers in ../../papers
 
 ***************************************************************************/
 

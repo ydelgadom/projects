@@ -1,20 +1,20 @@
 /************************************************************************
 * Program to generate configurations for different values of $PAR (=TAU,MU or KAPPA)
-*	in the dual representation of the Z(3) spin model.
+* in the dual representation of the Z(3) spin model.
 * The program can also use open worms (flag -DOPEN during compilation).
-*	See references in ../papers
+* See references in ../papers
 *
-*	Input file: ./bin/worm_$PAR.start
+* Input file: ./bin/worm_$PAR.start
 * ./bin/worm_$PAR.start contains the input parameters
 *
 * To compile
-*		closed worms: make SIZE=4 PAR=TAU gen
-*		open worms  : make SIZE=4 PAR=TAU genopen
-*	
-*	To execute: ./bin/gen$(SIZE)_$PAR.x
-*					or: ./bin/gen$(SIZE)_open_$PAR.x
+*   closed worms: make SIZE=4 PAR=TAU gen
+*   open worms  : make SIZE=4 PAR=TAU genopen
+* 
+* To execute: ./bin/gen$(SIZE)_$PAR.x
+*         or: ./bin/gen$(SIZE)_open_$PAR.x
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>
@@ -41,9 +41,9 @@ int main()
 {
   printf("\nProgram gen.cpp\n\nCompiled with leng = %d\n",leng);
 #ifdef OPEN
-	printf("Compiled for open worms\n");
+  printf("Compiled for open worms\n");
 #else
-	printf("Compiled for closed worms\n");
+  printf("Compiled for closed worms\n");
 #endif
 
   read_params();
@@ -52,32 +52,32 @@ int main()
   mk_arrays();  
     
   for ( int ipar=0; ipar<=npar; ++ipar )
-	{
+  {
 #ifdef KAPPA
     kappa = par0 + dpar*ipar;
 #endif
 #ifdef MU
-		mu = par0 + dpar*ipar;
+    mu = par0 + dpar*ipar;
 #endif
 #ifdef TAU
-		tau = par0 + dpar*ipar;
+    tau = par0 + dpar*ipar;
 #endif
     printf("ipar = %d - tau= %8.6f - mu= %8.6f - kappa = %8.6f\n",ipar,tau,mu,kappa);
 
-		// Calculate monomer and dimer weights 
-		calcdimerweights();
+    // Calculate monomer and dimer weights 
+    calcdimerweights();
     calcmonoweights();
 
-		// Thermalization steps
+    // Thermalization steps
     nworms(nequi);
 
-		// Measurements
+    // Measurements
     for (int imeas = 0; imeas<nmeas; imeas++)
-		{
-			// discarded steps
-  	  nworms(nskip);
+    {
+      // discarded steps
+      nworms(nskip);
 
-			// measurement
+      // measurement
       measure(imeas);
     }
     file.write((char*)nblock,6*nmeas*sizeof(int));

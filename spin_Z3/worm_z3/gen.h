@@ -17,7 +17,7 @@ int nequi; // equilibration steps
 int nmeas; // number of measurements
 int nskip; // discarded steps between measurements
 int iseed; // seed for Random Number Generator
-int npar;	// number of parameters (tau, kappa or mu) (observables computed as a function of par)
+int npar;   // number of parameters (tau, kappa or mu) (observables computed as a function of par)
 double par0; // initial parameter
 double dpar; // step size
 

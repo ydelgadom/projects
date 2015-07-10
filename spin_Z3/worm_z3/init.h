@@ -3,12 +3,12 @@
 
 /**************************************************************************
 
-	This file contains:
+  This file contains:
 
-	void read_params( )
-	void init_fields()
-	void mk_arrays()
-	void rm_arrays()
+  void read_params( )
+  void init_fields()
+  void mk_arrays()
+  void rm_arrays()
 
 ***************************************************************************/
 

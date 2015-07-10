@@ -4,7 +4,7 @@
 //_________________________________________________________________________
 inline void calcdimerweights()
 {
-	double expt = exp(tau);
+    double expt = exp(tau);
   bb = (expt*expt - 1./expt)/(expt*expt + 2./expt);
 }
 
