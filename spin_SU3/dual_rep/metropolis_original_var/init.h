@@ -3,15 +3,15 @@
 
 /************************************************************************
 
-	Subroutines in this file:
+  Subroutines in this file:
 
-	void read_params()
-	void init_fields()
-	void mk_arrays()
-	void rm_arrays()
-	void init_vtau()
-	void init_veta()
-	void init_vetabar()
+  void read_params()
+  void init_fields()
+  void mk_arrays()
+  void rm_arrays()
+  void init_vtau()
+  void init_veta()
+  void init_vetabar()
 
 **************************************************************************/
 
@@ -92,12 +92,12 @@ void read_params()
   file.close();
 
 #ifdef KAPPA0
-	if (kappa>0)
-	{
-		cout << "ERROR: kappa !neq 0" << endl;
-		cout << "Setting kappa to 0" << endl;
-		kappa = 0.0; 	
-	}
+  if (kappa>0)
+  {
+    cout << "ERROR: kappa !neq 0" << endl;
+    cout << "Setting kappa to 0" << endl;
+    kappa = 0.0;  
+  }
 #endif
    
   file.open(outfile,ios::trunc | ios::out | ios::binary );

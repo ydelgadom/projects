@@ -1,11 +1,11 @@
 /************************************************************************
 * Analysis program for different values of mu 
-*	in the dual representation of the SU(3) spin model (before changing variables).  
-*	See ref.: arXiv:1204.6074
+* in the dual representation of the SU(3) spin model (before changing variables).  
+* See ref.: arXiv:1204.6074
 *
-*	To execute: ./bin/anal_mu.x -f file_with_configs
+* To execute: ./bin/anal_mu.x -f file_with_configs
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>
@@ -44,10 +44,10 @@ double clin[nmeasmax],slin[nmeasmax],plin[nmeasmax];
   
 // average observables
 double eaver[nparmax],eerr[nparmax];  // energy
-double maver[nparmax],merr[nparmax];	// magnetization
-double caver[nparmax],ccerr[nparmax];	// heat capacity
-double saver[nparmax],serr[nparmax];	// susceptibility of mag.
-double paver[nparmax],perr[nparmax];	
+double maver[nparmax],merr[nparmax];  // magnetization
+double caver[nparmax],ccerr[nparmax]; // heat capacity
+double saver[nparmax],serr[nparmax];  // susceptibility of mag.
+double paver[nparmax],perr[nparmax];  
 double spaver[nparmax],sperr[nparmax];
 
 
@@ -56,11 +56,11 @@ void processdata( int &argc, char *argv[] );
 void finalize(int it);
 
 char texthelp[]="Usage: exec -f [FILE]\n"
-		"Analysis program of the SU(3) spin model in the dual rep. (original var.)\n"
-		"\n"
-		"Mandatory arguments to long options are mandatory for short options too.\n"
-		"  -f, --F  File with the configurations\n"
-		"Report bugs to ydelgado83@gmail.com\n";
+    "Analysis program of the SU(3) spin model in the dual rep. (original var.)\n"
+    "\n"
+    "Mandatory arguments to long options are mandatory for short options too.\n"
+    "  -f, --F  File with the configurations\n"
+    "Report bugs to ydelgado83@gmail.com\n";
 
 //-----------------------------------------------------------------------------   
 int main( int argc, char *argv[] )
@@ -69,7 +69,7 @@ int main( int argc, char *argv[] )
 
   processdata( argc, argv );
 
-	// print data to outputfile
+  // print data to outputfile
   file.open(outfile, ios::out | ios::trunc );
   for (int ipar = 0; ipar<=npar ; ipar++ ){
     file << par[ipar]    << " "
@@ -91,11 +91,11 @@ int main( int argc, char *argv[] )
 
 void finalize(int it)
 {
-	/*
-		This subrouting computes the average values of the
-		observables and the errors (Jackknife is used
-		for the susceptibilities)
-	*/ 
+  /*
+    This subrouting computes the average values of the
+    observables and the errors (Jackknife is used
+    for the susceptibilities)
+  */ 
   
   int    im;
   double esum,efsum,efblock,cfsum;
@@ -172,66 +172,66 @@ void finalize(int it)
 //!------------------------------------------------------------------------
 inline void getfilename( int &argc, char *argv[] )
 {
-	// Read name of file with configurations
-	if(argc<1) cout << endl << texthelp << endl;
+  // Read name of file with configurations
+  if(argc<1) cout << endl << texthelp << endl;
 
   int c;    
-	while (1)
-	{
-		static struct option long_options[] =
-			{
-			/* These options don't set a flag.
-			We distinguish them by their indices. */
-			{"F", required_argument, 0, 'f'},
-			{0, 0, 0, 0}
-			};
-			
-		/* getopt_long stores the option index here. */
-		int option_index = 0;
+  while (1)
+  {
+    static struct option long_options[] =
+      {
+      /* These options don't set a flag.
+      We distinguish them by their indices. */
+      {"F", required_argument, 0, 'f'},
+      {0, 0, 0, 0}
+      };
+      
+    /* getopt_long stores the option index here. */
+    int option_index = 0;
 
-		c = getopt_long (argc, argv, "f:",
-		long_options, &option_index);
+    c = getopt_long (argc, argv, "f:",
+    long_options, &option_index);
 
-		/* Detect the end of the options. */
-		if (c == -1)
-			break;
+    /* Detect the end of the options. */
+    if (c == -1)
+      break;
 
-		switch (c){
-			case 0:
-				/* If this option set a flag, do nothing else now. */
-				if (long_options[option_index].flag != 0)
-					break;
-				printf ("option %s", long_options[option_index].name);
-				if (optarg)
-					printf (" with arg %s", optarg);
-				printf ("\n");
+    switch (c){
+      case 0:
+        /* If this option set a flag, do nothing else now. */
+        if (long_options[option_index].flag != 0)
+          break;
+        printf ("option %s", long_options[option_index].name);
+        if (optarg)
+          printf (" with arg %s", optarg);
+        printf ("\n");
 
-			case 'f':
-				sprintf(infile,"%s",optarg);
-			  sprintf(outfile,"%sobs",infile);
-				cout << "Input File: " << infile << endl;
-  			cout << "Output file: " << outfile << endl;
-				break;
+      case 'f':
+        sprintf(infile,"%s",optarg);
+        sprintf(outfile,"%sobs",infile);
+        cout << "Input File: " << infile << endl;
+        cout << "Output file: " << outfile << endl;
+        break;
 
-			default:
-				cout << endl << texthelp << endl;
-		}
-	}
+      default:
+        cout << endl << texthelp << endl;
+    }
+  }
 }
    
 //!------------------------------------------------------------------------
 void processdata( int &argc, char *argv[] )
 {
-	// Local MC parameters  
+  // Local MC parameters  
   int nequi,nskip,iseed;
 
-	// Occupation numbers
+  // Occupation numbers
   int nmon[3],ndim;
 
-	// array with measurements from gen.cpp 
+  // array with measurements from gen.cpp 
   int *nblock;
   
-	getfilename( argc, argv );
+  getfilename( argc, argv );
   
   file.open(infile, ios::in | ios::binary);
   file.read((char*)&leng,sizeof(int));
@@ -274,14 +274,14 @@ void processdata( int &argc, char *argv[] )
   
   nsite  = leng*leng*leng;
   nblock = new int[3*nmeas];
-  		  		   
+               
   for( int ipar=0 ; ipar<=npar ; ipar++ )
-	{      
+  {      
     par[ipar] = par0 + ipar*dpar;
 #ifdef MU
-		mu = par[ipar];
+    mu = par[ipar];
 #else
-		tau = par[ipar];
+    tau = par[ipar];
 #endif
 #ifdef KAPPA0
     eta = 0.;

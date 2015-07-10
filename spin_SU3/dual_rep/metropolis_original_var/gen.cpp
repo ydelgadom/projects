@@ -1,14 +1,14 @@
 /************************************************************************
 * Program to generate configurations for different values of mu 
-*	in the dual representation of the SU(3) spin model (before changing variables).  
-*	See ref.: arXiv:1204.6074
+* in the dual representation of the SU(3) spin model (before changing variables).  
+* See ref.: arXiv:1204.6074
 *
-*	Input file: ./bin/metro_su3_mu.start
+* Input file: ./bin/metro_su3_mu.start
 * ./bin/metro_su3_mu.start contains the input parameters
-*	
-*	To execute: ./bin/gen$(SIZE)_mu.x
+* 
+* To execute: ./bin/gen$(SIZE)_mu.x
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 **************************************************************************/
 #include <cmath>
 #include <fstream>
@@ -44,21 +44,21 @@ int main()
 #ifdef MU
     mu = par0 + ipar*dpar;
 #else
-		tau = par0 + ipar*dpar;
+    tau = par0 + ipar*dpar;
 #endif
     eta = kappa*exp(mu);
     etabar = kappa*exp(-mu);
-	  init_vtau();
+    init_vtau();
     init_veta();
     init_vetabar();
     printf("%d - tau = %8.6f - kappa = %8.6f - mu = %8.6f\n",ipar,tau,kappa,mu);
 
-		// Equilibration steps
+    // Equilibration steps
     nsweeps(nequi);
     for (int imeas=0; imeas<nmeas; imeas++){
-			// discarded MC stes
+      // discarded MC stes
       nsweeps(nskip);
-			// measurement
+      // measurement
       measure(imeas);
     }
     file.write((char*)nblock,3*nmeas*sizeof(int));

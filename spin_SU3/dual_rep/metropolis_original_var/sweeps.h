@@ -3,18 +3,18 @@
 
 /**************************************************************************
 
-	This file contains the following subroutins:
+  This file contains the following subroutins:
 
-	void nsweeps(int ns)
-	void metropolis_l()
-	void metropolis_lbar()
-	void metropolis_l_lbar()
-	void metropolis_plaquette()
-	void metropolis_s()
-	void metropolis_sbar()
-	void metropolis_s_sbar()
-	void metropolis_meson()
-	void metropolis_winding_loop()
+  void nsweeps(int ns)
+  void metropolis_l()
+  void metropolis_lbar()
+  void metropolis_l_lbar()
+  void metropolis_plaquette()
+  void metropolis_s()
+  void metropolis_sbar()
+  void metropolis_s_sbar()
+  void metropolis_meson()
+  void metropolis_winding_loop()
 
 **************************************************************************/
 
@@ -526,7 +526,7 @@ void nsweeps(int ns)
     metropolis_s_sbar();
     metropolis_meson();
 #endif
-		metropolis_winding_loop();
+    metropolis_winding_loop();
   }
 }
 
