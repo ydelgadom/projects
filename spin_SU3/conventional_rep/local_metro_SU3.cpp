@@ -1,12 +1,12 @@
 /******************************************************************
 * Generate configurations in the conventional representation of the 
-*	SU(3) spin model.  See ref.: arXiv:1204.6074
+* SU(3) spin model.  See ref.: arXiv:1204.6074
 *
-*	Input file: ./bin/metro_su3.start
-*	
-*	To execute: ./bin/gen$(SIZE).x
+* Input file: ./bin/metro_su3.start
+* 
+* To execute: ./bin/gen$(SIZE).x
 *
-*	By: Ydalia Delgado (ydelgado83@gmail.com)
+* By: Ydalia Delgado (ydelgado83@gmail.com)
 ******************************************************************/
 #include <cmath>
 #include <fstream>
